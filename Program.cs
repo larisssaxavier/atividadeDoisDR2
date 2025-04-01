@@ -1,65 +1,30 @@
-﻿using System;
+﻿// See https://aka.ms/new-console-template for more information
 
 class Program
 {
-    public static (int anos, int meses, int dias) CalculaIdade(DateTime dataNascimento)
+    static void Main()
     {
-        DateTime dataAtual = DateTime.Today;
+        Console.WriteLine("Qual exercicio deseja executar?");
+        Console.WriteLine("Exercicio 1 - Calculadora de idade");
+        Console.WriteLine("Exercicio 2 - Calculadora de dias restantes aniversário");
+        Console.WriteLine("Exercicio 3 - Calculadora de diferença entre datas");
 
-        int anos = dataAtual.Year - dataNascimento.Year;
-        int meses = dataAtual.Month - dataNascimento.Month;
-        int dias = dataAtual.Day - dataNascimento.Day;
+        var opcao = Console.ReadLine();
 
-        if (dias < 0)
+        switch (opcao)
         {
-            meses--;
-            int mesAnterior = dataAtual.Month - 1;
-            int anoAnterior = dataAtual.Year;
-
-            if (mesAnterior < 1)
-            {
-                mesAnterior = 12;
-                anoAnterior--;
-            }
-
-            dias += DateTime.DaysInMonth(anoAnterior, mesAnterior);
+            case "1":
+                CalculoIdade.Executar();
+                break;
+            case "2":
+                NovoAniversario.Executar();
+                break;
+            case "3":
+                DiferencaDatas.Executar();
+                break;
+            default:
+                Console.WriteLine("Opção inválida!");
+                break;
         }
-        if (meses < 0)
-        {
-            anos--;
-            meses += 12;
-        }
-        return (anos, meses, dias);
-    }
-
-    static void Main(string[] args) 
-    {
-        DateTime dataNascimento;
-
-        Console.WriteLine("--Calculdora de idade precisa--");
-
-        while (true)
-        {
-            Console.Write("Digite sua data de nascimento (dd/mm/aaaa): ");
-
-            if (DateTime.TryParse(Console.ReadLine(), out dataNascimento))
-            {
-                if (dataNascimento > DateTime.Today)
-                {
-                    Console.WriteLine("A data que digitou está no futuro! Insira uma data válida.");
-                }
-                else
-                {
-                    break;
-                }
-            }
-            else
-            {
-                Console.WriteLine("Formato inválido! Insira uma data no formato dd/mm/aaaa.");
-            }
-        }
-        var idade = CalculaIdade(dataNascimento);
-        Console.WriteLine("\n Sua idade exata é: ");
-        Console.WriteLine($"{ idade.anos} anos { idade.meses} meses e { idade.dias} dias");
     }
 }
